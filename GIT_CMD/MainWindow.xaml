@@ -1,0 +1,18 @@
+﻿<Window x:Class="GIT_CMD.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GIT_CMD"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="258" Width="800">
+    <Grid Margin="0,0,0,45">
+        <TextBox HorizontalAlignment="Left" Margin="248,49,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="376" x:Name="link_repo"/>
+        <Button HorizontalAlignment="Center" Margin="0,146,0,0" VerticalAlignment="Top" Content="Cloner" Width="72" Click="Cloner" x:Name="button_clone"/>
+        <Label Content="Lien du repo :" HorizontalAlignment="Left" Margin="150,45,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="248,94,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="376" x:Name="folder_link"/>
+        <Label Content="CLoner dans le dossier :" HorizontalAlignment="Left" Margin="97,90,0,0" VerticalAlignment="Top"/>
+        <Button Content="..." HorizontalAlignment="Left" Width="25" Margin="629,94,0,0" VerticalAlignment="Top" Click="Select_Direction"/>
+
+    </Grid>
+</Window>
