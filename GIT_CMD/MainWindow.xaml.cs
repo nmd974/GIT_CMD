@@ -79,6 +79,23 @@ namespace GIT_CMD
                 }
 
                 folder_link.Text = path;
+
+                //On verifie si un dossier git existe déjà, dans ce cas on empeche le clone
+                string check_git_folder = path + "/.git";
+                if (System.IO.Directory.Exists(check_git_folder))
+                {
+                    label_repo_clone.Visibility = Visibility.Hidden;
+                    link_repo.Visibility = Visibility.Hidden;
+                    button_clone.Visibility = Visibility.Hidden;
+                    message_Git_exist.Visibility = 0;
+                }
+                else
+                {
+                    label_repo_clone.Visibility = 0;
+                    link_repo.Visibility = 0;
+                    button_clone.Visibility = 0;
+                    message_Git_exist.Visibility = Visibility.Hidden;
+                }
             }
         }
 

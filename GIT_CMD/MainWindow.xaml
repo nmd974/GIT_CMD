@@ -12,12 +12,12 @@
         <Button Foreground="White" Background="black" Content="..." HorizontalAlignment="Left" Width="25" Margin="588,32,0,0" VerticalAlignment="Top" Click="SelectDirection" x:Name="button_direction" Height="18"/>
         <Image HorizontalAlignment="Left" Height="59" Margin="22,8,0,0" VerticalAlignment="Top" Width="63" Source="github.png"/>
 
-        <TabControl Margin="106,92,36,80">
+        <TabControl Margin="22,92,36,80">
             <TabItem Header="Cloner un repo">
                 <Grid Background="#FFE5E5E5">
                     <TextBox HorizontalAlignment="Left" Margin="101,19,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="390" x:Name="link_repo"/>
-                    <Label Foreground="black"  Content="Lien du repo :" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="91"/>
-                    <Label Foreground="black"  Content="Le repo est déjà existant dans ce dossier !" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top" Width="243" Visibility="Hidden"/>
+                    <Label Foreground="black"  Content="Lien du repo :" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="91" x:Name="label_repo_clone"/>
+                    <Label x:Name="message_Git_exist" Foreground="black"  Content="Le repo est déjà existant dans ce dossier !" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top" Width="243" Visibility="Hidden"/>
                     <Button Foreground="White" Background="green" HorizontalAlignment="Center" Margin="0,65,0,0" VerticalAlignment="Top" Content="Cloner" Width="164" Click="Cloner" x:Name="button_clone"/>
                 </Grid>
             </TabItem>
