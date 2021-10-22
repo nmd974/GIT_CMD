@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Diagnostics;
-
+using System.IO;
+using System.Collections.Generic;
 namespace GIT_CMD
 {
     /// <summary>
@@ -33,9 +34,9 @@ namespace GIT_CMD
                 {
                     WorkingDirectory = folder,
                     FileName = "cmd.exe",
-                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal,
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                     RedirectStandardInput = true,
-                    //CreateNoWindow = true,
+                    CreateNoWindow = true,
                     UseShellExecute = false
                 };
 
@@ -83,13 +84,29 @@ namespace GIT_CMD
 
         private void Push(object sender, RoutedEventArgs e)
         {
-            if(MessagePush.Text == "")
+            string folder = folder_link.Text;
+            string check_git_folder = folder + "/toto";
+            var fileInfo = new FileInfo(check_git_folder);
+            if (fileInfo.Exists)
+            {
+                Debug.WriteLine("NOK");
+            }
+            if (fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
+            {
+                Debug.WriteLine("OK");
+            }
+            
+            if (MessagePush.Text == "")
             {
                 alert_push.Visibility = 0;
             }
+            else if (System.IO.Directory.Exists(check_git_folder))
+            {
+                MessageBox.Show("Pas de repo git existant dans ce dossier !");
+            }
             else
             {
-                string folder = folder_link.Text;
+
                 string[] commands;
                 commands = new string[3]{
                     "git add .",
@@ -109,8 +126,6 @@ namespace GIT_CMD
 
                 try
                 {
-                    
-
                     foreach (string c in commands)
                     {
                         Process cmd = Process.Start(startInfo);
