@@ -14,7 +14,6 @@ namespace GIT_CMD
             InitializeComponent();
         }
 
-        
         private void Cloner(object sender, RoutedEventArgs e)
         {
             if(folder_link.Text == "")
