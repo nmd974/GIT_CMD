@@ -85,22 +85,12 @@ namespace GIT_CMD
         private void Push(object sender, RoutedEventArgs e)
         {
             string folder = folder_link.Text;
-            string check_git_folder = folder + "/toto";
-            var fileInfo = new FileInfo(check_git_folder);
-            if (fileInfo.Exists)
-            {
-                Debug.WriteLine("NOK");
-            }
-            if (fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
-            {
-                Debug.WriteLine("OK");
-            }
-            
+            string check_git_folder = folder + "/.git";
             if (MessagePush.Text == "")
             {
                 alert_push.Visibility = 0;
             }
-            else if (System.IO.Directory.Exists(check_git_folder))
+            else if (!System.IO.Directory.Exists(check_git_folder))
             {
                 MessageBox.Show("Pas de repo git existant dans ce dossier !");
             }
@@ -118,9 +108,9 @@ namespace GIT_CMD
                 {
                     WorkingDirectory = folder,
                     FileName = "cmd.exe",
-                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal,
                     RedirectStandardInput = true,
-                    CreateNoWindow = true,
+                    //CreateNoWindow = true,
                     UseShellExecute = false
                 };
 
