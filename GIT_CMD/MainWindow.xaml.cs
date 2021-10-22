@@ -31,18 +31,18 @@ namespace GIT_CMD
 
                 var startInfo = new System.Diagnostics.ProcessStartInfo
                 {
-                    // WorkingDirectory = @"J:\Projets\C#\APPS",
-                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                    WorkingDirectory = folder_link.Text,
                     FileName = "cmd.exe",
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                     RedirectStandardInput = true,
-                    UseShellExecute = false,
-
+                    CreateNoWindow = true,
+                    UseShellExecute = false
                 };
 
                 try
                 {
                     Process cmd = Process.Start(startInfo);
-                    cmd.StandardInput.WriteLine(link_folder);
+                    //cmd.StandardInput.WriteLine(link_folder);
                     cmd.StandardInput.WriteLine(command);
                     cmd.StandardInput.Close();
                     cmd.WaitForExit();
@@ -70,7 +70,6 @@ namespace GIT_CMD
 
             // Show save file dialog box
             var result = dialog.ShowDialog();
-            Debug.WriteLine(dialog.FileName);
             // Process save file dialog box results
             if (result == true)
             {

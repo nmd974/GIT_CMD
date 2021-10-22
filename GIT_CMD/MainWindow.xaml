@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GIT_CMD"
         mc:Ignorable="d"
-        Title="MainWindow" Height="258" Width="800">
+        Title="GIT COMMAND" Height="258" Width="800">
     <Grid Margin="0,0,0,45">
         <TextBox HorizontalAlignment="Left" Margin="248,49,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="376" x:Name="link_repo"/>
         <Button HorizontalAlignment="Center" Margin="0,146,0,0" VerticalAlignment="Top" Content="Cloner" Width="72" Click="Cloner" x:Name="button_clone"/>
