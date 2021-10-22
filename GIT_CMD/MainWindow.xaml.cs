@@ -13,7 +13,7 @@ namespace GIT_CMD
             InitializeComponent();
         }
 
-
+        
         private void Cloner(object sender, RoutedEventArgs e)
         {
             if(folder_link.Text == "")
@@ -26,12 +26,80 @@ namespace GIT_CMD
             }
             else
             {
-                string link_folder = "cd " + folder_link.Text;
                 string command = "git clone " + link_repo.Text;
+                string folder = folder_link.Text;
+                
+                var startInfo = new System.Diagnostics.ProcessStartInfo
+                {
+                    WorkingDirectory = folder,
+                    FileName = "cmd.exe",
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal,
+                    RedirectStandardInput = true,
+                    //CreateNoWindow = true,
+                    UseShellExecute = false
+                };
+
+                try
+                {
+                    Process cmd = Process.Start(startInfo);
+                    cmd.StandardInput.WriteLine(command);
+                    cmd.StandardInput.Close();
+                    cmd.WaitForExit();
+                    MessageBox.Show("Le repo a bien été cloné !");
+                    link_repo.Clear();
+                }
+                catch (System.ComponentModel.Win32Exception win32Exception)
+                {
+                    Debug.WriteLine(win32Exception.Message);
+                    MessageBox.Show(win32Exception.Message);
+                }
+
+            }
+            
+        }
+        private void SelectDirection(object sender, RoutedEventArgs e)
+        {
+
+            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.Title = "Selection de l'emplacement";
+            dialog.Filter = "Directory|*.this.directory";
+            dialog.FileName = "select";
+
+            var result = dialog.ShowDialog();
+            if (result == true)
+            {
+                string path = dialog.FileName;
+                path = path.Replace("\\select.this.directory", "");
+                path = path.Replace(".this.directory", "");
+
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+
+                folder_link.Text = path;
+            }
+        }
+
+        private void Push(object sender, RoutedEventArgs e)
+        {
+            if(MessagePush.Text == "")
+            {
+                alert_push.Visibility = 0;
+            }
+            else
+            {
+                string folder = folder_link.Text;
+                string[] commands;
+                commands = new string[3]{
+                    "git add .",
+                    "git commit -m " + MessagePush.Text,
+                    "git push"
+                };
 
                 var startInfo = new System.Diagnostics.ProcessStartInfo
                 {
-                    WorkingDirectory = folder_link.Text,
+                    WorkingDirectory = folder,
                     FileName = "cmd.exe",
                     WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                     RedirectStandardInput = true,
@@ -41,52 +109,55 @@ namespace GIT_CMD
 
                 try
                 {
-                    Process cmd = Process.Start(startInfo);
-                    //cmd.StandardInput.WriteLine(link_folder);
-                    cmd.StandardInput.WriteLine(command);
-                    cmd.StandardInput.Close();
-                    cmd.WaitForExit();
-                    MessageBox.Show("Le repo a bien été cloné !");
-                    folder_link.Clear();
-                    link_repo.Clear();
-                    System.Environment.Exit(0);
+                    
+
+                    foreach (string c in commands)
+                    {
+                        Process cmd = Process.Start(startInfo);
+                        cmd.StandardInput.WriteLine(c);
+                        cmd.StandardInput.Close();
+                        cmd.WaitForExit();
+                    }
+                    
+                    MessageBox.Show("Le push s'est bien passé !");
                 }
                 catch (System.ComponentModel.Win32Exception win32Exception)
                 {
-                    //The system cannot find the file specified...
                     Debug.WriteLine(win32Exception.Message);
                     MessageBox.Show(win32Exception.Message);
                 }
             }
-            
         }
-        private void SelectDirection(object sender, RoutedEventArgs e)
+
+        
+    }
+
+    public partial class ProcessCommand : Process
+    {
+        public ProcessCommand(string folder)
         {
-            // Configure save file dialog box
-            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.Title = "Selection de l'emplacement";
-            dialog.Filter = "Directory|*.this.directory"; // Prevents displaying files
-            dialog.FileName = "select"; // Filename will then be "select.this.directory"
-
-            // Show save file dialog box
-            var result = dialog.ShowDialog();
-            // Process save file dialog box results
-            if (result == true)
+            var startInfo = new System.Diagnostics.ProcessStartInfo
             {
-                string path = dialog.FileName;
-                // Remove fake filename from resulting path
-                path = path.Replace("\\select.this.directory", "");
-                path = path.Replace(".this.directory", "");
-                // If user has changed the filename, create the new directory
-                if (!System.IO.Directory.Exists(path))
-                {
-                    System.IO.Directory.CreateDirectory(path);
-                }
-                // Our final value is in path
-                folder_link.Text = path;
+                WorkingDirectory = folder,
+                FileName = "cmd.exe",
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                RedirectStandardInput = true,
+                CreateNoWindow = true,
+                UseShellExecute = false
+            };
+
+            try
+            {
+                Process.Start(startInfo);
             }
+            catch (System.ComponentModel.Win32Exception win32Exception)
+            {
+                Debug.WriteLine(win32Exception.Message);
+                MessageBox.Show(win32Exception.Message);
+            }
+                        
         }
-
-
+        
     }
 }
+
