@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Diagnostics;
-using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace GIT_CMD
 {
@@ -33,10 +32,11 @@ namespace GIT_CMD
                 var startInfo = new System.Diagnostics.ProcessStartInfo
                 {
                     // WorkingDirectory = @"J:\Projets\C#\APPS",
-                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal,
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                     FileName = "cmd.exe",
                     RedirectStandardInput = true,
                     UseShellExecute = false,
+
                 };
 
                 try
@@ -62,12 +62,29 @@ namespace GIT_CMD
         }
         private void SelectDirection(object sender, RoutedEventArgs e)
         {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "C:\\Users";
-            dialog.IsFolderPicker = true;
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            // Configure save file dialog box
+            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.Title = "Selection de l'emplacement";
+            dialog.Filter = "Directory|*.this.directory"; // Prevents displaying files
+            dialog.FileName = "select"; // Filename will then be "select.this.directory"
+
+            // Show save file dialog box
+            var result = dialog.ShowDialog();
+            Debug.WriteLine(dialog.FileName);
+            // Process save file dialog box results
+            if (result == true)
             {
-                MessageBox.Show("You selected: " + dialog.FileName);
+                string path = dialog.FileName;
+                // Remove fake filename from resulting path
+                path = path.Replace("\\select.this.directory", "");
+                path = path.Replace(".this.directory", "");
+                // If user has changed the filename, create the new directory
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                // Our final value is in path
+                folder_link.Text = path;
             }
         }
 
