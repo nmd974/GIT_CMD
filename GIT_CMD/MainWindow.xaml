@@ -12,7 +12,7 @@
         <Label Content="Lien du repo :" HorizontalAlignment="Left" Margin="150,45,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="248,94,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="376" x:Name="folder_link"/>
         <Label Content="CLoner dans le dossier :" HorizontalAlignment="Left" Margin="97,90,0,0" VerticalAlignment="Top"/>
-        <Button Content="..." HorizontalAlignment="Left" Width="25" Margin="629,94,0,0" VerticalAlignment="Top" Click="Select_Direction"/>
+        <Button Content="..." HorizontalAlignment="Left" Width="25" Margin="629,94,0,0" VerticalAlignment="Top" Click="SelectDirection" x:Name="button_direction"/>
 
     </Grid>
 </Window>
